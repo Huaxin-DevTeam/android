@@ -4,6 +4,23 @@
     <string name="app_name">Huaxin</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Welcome!</string>
+    <string name="title_activity_list">Huaxin</string>
+    
+    <string name="title_search">BÚSQUEDA</string>
+    <string name="title_whatyousearch">¿QUÉ BUSCAS?</string>
+    
+    <string name="search_keywords">Introduce tu búsuqeda</string>
+    
+    <string name="btn_search">Buscar</string>
+    <string name="btn_new_ad">Publicar anuncio</string>
+    
+    <string name="descr_logo">HUAXIN Logo</string>
+    <string name="descr_publi">HUAXIN Publi</string>
+    <string name="descr_img">ITEM Image</string>
+    
+    <string name="loading">Cargando...</string>
+    <string name="anuncios">anuncios</string>
+    
 
 </resources>

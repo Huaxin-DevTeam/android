@@ -2,16 +2,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@android:id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/hello_world" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/layout_wrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/descr_logo"
+                android:src="@drawable/logo" />
+
+            <TextView
+                style="@style/blue_title"
+                android:text="@string/title_whatyousearch" />
+
+            <Spinner
+                android:id="@+id/spin_categories"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp" />
+
+            <TextView
+                style="@style/blue_title"
+                android:text="@string/title_search" />
+
+            <EditText
+                android:id="@+id/txt_search"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:singleLine="true"
+                android:hint="@string/search_keywords" >
+            </EditText>
+
+            <Button
+                android:id="@+id/btn_search"
+                style="@style/blue_button"
+                android:text="@string/btn_search" />
+
+            <Button
+                android:id="@+id/btn_new_ad"
+                style="@style/blue_button"
+                android:text="@string/btn_new_ad" />
+
+            <ImageView
+                android:id="@+id/img_publi"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:contentDescription="@string/descr_publi"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+    </ScrollView>
 
     <com.devspark.sidenavigation.SideNavigationView
         android:id="@+id/side_navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </com.devspark.sidenavigation.SideNavigationView>
 
 </RelativeLayout>

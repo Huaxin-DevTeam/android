@@ -1,20 +1,23 @@
 package es.mihx.huaxin.activity;
 
-import es.mihx.huaxin.R;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.os.Messenger;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import es.mihx.huaxin.R;
+import es.mihx.huaxin.service.WebService;
+import es.mihx.huaxin.utils.Constants;
 
+@SuppressLint("HandlerLeak")
 public class SplashActivity extends Activity {
-	
-	// Splash screen timer
-	private static int SPLASH_TIME_OUT = 2000;
-
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,26 +26,32 @@ public class SplashActivity extends Activity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.activity_splash);
-
-		new Handler().postDelayed(new Runnable() {
-
-			/*
-			 * Showing splash screen with a timer. This will be useful when you
-			 * want to show case your app logo / company
-			 */
-
+		
+		Handler handler = new Handler(){
 			@Override
-			public void run() {
-				// This method will be executed once the timer is over
-				// Start your app main activity
-				Intent i;
-				i = new Intent(SplashActivity.this, MainActivity.class);
-				startActivity(i);
-
-				// close this activity
-				finish();
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				
+				if(msg.what == Constants.OK){
+					openMainActivity();
+				}
 			}
-		}, SPLASH_TIME_OUT);
+		};
+		
+		Messenger messenger = new Messenger(handler);
+		
+		Intent intent = new Intent(this,WebService.class);
+		intent.putExtra(WebService.PARAM_OPERATION, WebService.OPERATION_INIT);
+		intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
+		this.startService(intent);
+	}
+	
+	private void openMainActivity(){
+		Intent i;
+		i = new Intent(SplashActivity.this, MainActivity.class);
+		startActivity(i);
+
+		finish();
 	}
 
 	@Override
