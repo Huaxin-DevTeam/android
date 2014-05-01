@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:weightSum="1" >
+
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="100dp"
+        android:layout_weight="0.3" >
+
+        <ImageView
+            android:id="@+id/img_item"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:contentDescription="@string/descr_img" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt_item_title"
+            style="@style/blue_text"
+            android:layout_width="fill_parent"
+            android:ellipsize="end"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/txt_item_category"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:textSize="5pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_item_location"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/txt_item_description"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_call"
+                android:layout_width="@dimen/icon"
+                android:layout_height="@dimen/icon"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/ic_phone" />
+
+            <Button
+                android:id="@+id/btn_fav"
+                android:layout_width="@dimen/icon"
+                android:layout_height="@dimen/icon"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="50dip"
+                android:background="@drawable/ic_star_off" />
+
+            <Button
+                android:id="@+id/btn_share"
+                android:layout_width="@dimen/icon"
+                android:layout_height="@dimen/icon"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="100dip"
+                android:background="@drawable/ic_share" />
+
+            <TextView
+                android:id="@+id/txt_item_price"
+                style="@style/blue_text"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
