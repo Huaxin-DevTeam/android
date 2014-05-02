@@ -14,6 +14,10 @@
     <string name="title_location">UBICACIÓN</string>
     
     <string name="search_keywords">Introduce tu búsuqeda</string>
+    <string name="phone_or_email">Teléfono o email</string>
+    <string name="password">Password</string>
+    <string name="welcome_back">Welcome back, </string>
+    <string name="logout_ok">Logout successful!</string>
     
     <string name="btn_search">Buscar</string>
     <string name="btn_new_ad">Publicar anuncio</string>
@@ -27,6 +31,7 @@
     <string name="username">Username</string>
     <string name="new_search">Nueva Búsqueda</string>
     <string name="favorites">Favoritos</string>
+    <string name="new_ad">Nuevo Anuncio</string>
     <string name="my_ads">Mis Anuncios</string>
     <string name="buy_credits">Comprar Créditos</string>
     <string name="login">Login</string>
@@ -34,6 +39,9 @@
     
     <string name="share_via">Share via</string>
     <string name="share_subject">Anuncio en HUAXIN</string>
+    
+    <string name="username_notblank">Username cannot be blank.</string>
+    <string name="password_notblank">Password cannot be blank.</string>
     
 
 </resources>

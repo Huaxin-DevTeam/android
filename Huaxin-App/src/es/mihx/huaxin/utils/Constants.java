@@ -10,6 +10,7 @@ public class Constants {
 	
 	public static final String PREFS_NAME = "HUAXIN_PREFS";
 	public static final String PREFS_FAV_KEY = "HUAXIN_FAVORITES";
+	public static final String PREFS_TOKEN_KEY = "HUAXIN_USER_TOKEN";
 	
 	public static final String PARAM_ID = "PARAM_ID";
 	
@@ -20,6 +21,9 @@ public class Constants {
 	
 	public static final String BASEURL = "http://dev.mihx.es";
 	public static final String VIEWITEMURL = "/view/";
+	
+	public static final String FROM_SPLASH = "FROM_SPLASH";
+	public static final String FROM_LOGOUT = "FROM_LOGOUT";
 	
 	private static HuaxinApp app;
 

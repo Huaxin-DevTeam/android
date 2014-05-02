@@ -4,6 +4,7 @@ import android.app.Application;
 import es.mihx.huaxin.list.CategoryList;
 import es.mihx.huaxin.list.ItemList;
 import es.mihx.huaxin.model.Ad;
+import es.mihx.huaxin.model.User;
 import es.mihx.huaxin.utils.Constants;
 
 public class HuaxinApp extends Application {
@@ -11,6 +12,7 @@ public class HuaxinApp extends Application {
 	public CategoryList categories;
 	public Ad ad;
 	public ItemList items;
+	public User user;
 	
 	@Override
 	public void onCreate() {
@@ -40,6 +42,14 @@ public class HuaxinApp extends Application {
 	
 	public void setItems(ItemList items){
 		this.items = items;
+	}
+	
+	public User getUser(){
+		return this.user;
+	}
+
+	public void setUser(User user){
+		this.user = user;
 	}
 	
 	/*

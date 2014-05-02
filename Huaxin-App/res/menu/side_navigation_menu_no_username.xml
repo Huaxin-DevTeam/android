@@ -10,13 +10,9 @@
         android:icon="@drawable/ic_favs"
         android:title="@string/favorites"/>
     <item
-        android:id="@+id/sidemenu_myads"
-        android:icon="@drawable/ic_myads"
-        android:title="@string/my_ads"/>
-    <item
-        android:id="@+id/sidemenu_buy"
-        android:icon="@drawable/ic_buy"
-        android:title="@string/buy_credits"/>
+        android:id="@+id/sidemenu_new_ad"
+        android:icon="@drawable/ic_favs"
+        android:title="@string/new_ad"/>
     <item
         android:id="@+id/sidemenu_login"
         android:icon="@drawable/ic_login"

@@ -42,6 +42,16 @@ public class MainActivity extends BaseActivity {
 		initScreen();
 		
 		prepareControls();
+		
+		Intent intent = getIntent();
+		boolean from_splash = intent.getBooleanExtra(Constants.FROM_SPLASH, false);
+		boolean from_logout = intent.getBooleanExtra(Constants.FROM_LOGOUT, false);
+		
+		if(from_splash && Constants.getApp().getUser() != null){
+			Utils.makeText(this, getString(R.string.welcome_back) + " " + Constants.getApp().getUser().getEmail());
+		}else if(from_logout){
+			Utils.makeText(this, getString(R.string.logout_ok));
+		}
 	}
 	
 	private void initScreen(){

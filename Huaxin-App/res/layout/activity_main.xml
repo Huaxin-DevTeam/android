@@ -10,6 +10,7 @@
             android:id="@+id/layout_wrapper"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:paddingLeft="40dp"
             android:paddingRight="40dp" >
@@ -40,8 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
-                android:singleLine="true"
-                android:hint="@string/search_keywords" >
+                android:hint="@string/search_keywords"
+                android:singleLine="true" >
             </EditText>
 
             <Button

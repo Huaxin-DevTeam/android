@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import es.mihx.huaxin.R;
 import es.mihx.huaxin.service.WebService;
 import es.mihx.huaxin.utils.Constants;
+import es.mihx.huaxin.utils.Utils;
 
 @SuppressLint("HandlerLeak")
 public class SplashActivity extends Activity {
@@ -40,15 +42,21 @@ public class SplashActivity extends Activity {
 		
 		Messenger messenger = new Messenger(handler);
 		
+		//Recuperar token para autologin
+		String token = Utils.getToken();
+		Log.i("SplashActivity", "TOKEN: " + token);
+		
 		Intent intent = new Intent(this,WebService.class);
 		intent.putExtra(WebService.PARAM_OPERATION, WebService.OPERATION_INIT);
 		intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
+		intent.putExtra(WebService.PARAM_TOKEN, token);
 		this.startService(intent);
 	}
 	
 	private void openMainActivity(){
 		Intent i;
 		i = new Intent(SplashActivity.this, MainActivity.class);
+		i.putExtra(Constants.FROM_SPLASH, true);
 		startActivity(i);
 
 		finish();

@@ -331,6 +331,7 @@ public class SideNavigationView extends LinearLayout {
             } else {
                 holder.icon.setVisibility(View.GONE);
             }
+            
             return convertView;
         }
 
@@ -340,5 +341,13 @@ public class SideNavigationView extends LinearLayout {
         }
 
     }
+    
+    public SideNavigationItem getItem(int pos){
+		return this.menuItems.get(pos);
+	}
+	
+	public void setItemText(int pos, String text){
+		this.getItem(pos).setText(text);
+	}
 
 }
