@@ -42,6 +42,7 @@
     
     <string name="username_notblank">Username cannot be blank.</string>
     <string name="password_notblank">Password cannot be blank.</string>
+    <string name="error_no_favs">You don\'t have any favorites yet.</string>
     
 
 </resources>

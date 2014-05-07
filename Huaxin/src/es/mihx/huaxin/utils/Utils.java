@@ -115,6 +115,12 @@ public class Utils {
 		return false;
 	}
 
+	public static String getFavorites() {
+		SharedPreferences prefs = Constants.getApp().getSharedPreferences(
+				Constants.PREFS_NAME, Context.MODE_PRIVATE);
+		return prefs.getString(Constants.PREFS_FAV_KEY, null);
+	}
+
 	public static void setToken(String token) {
 
 		SharedPreferences prefs = Constants.getApp().getSharedPreferences(

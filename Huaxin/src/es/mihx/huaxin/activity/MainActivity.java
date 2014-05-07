@@ -142,12 +142,6 @@ public class MainActivity extends BaseActivity {
 //		startActivity(intent);
 	}
 	
-	private void openListActivity(){
-		showLoading(false);
-		Intent intent = new Intent(this,ListActivity.class);
-		startActivity(intent);
-	}
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
