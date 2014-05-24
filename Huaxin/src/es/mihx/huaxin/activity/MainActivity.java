@@ -31,118 +31,132 @@ public class MainActivity extends BaseActivity {
 	private Spinner spin_categories;
 	private Button btn_search, btn_new_ad;
 	private ImageView img_publi;
-		
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-	
+
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_main);
-		
+
 		initScreen();
-		
+
 		prepareControls();
-		
+
 		Intent intent = getIntent();
-		boolean from_splash = intent.getBooleanExtra(Constants.FROM_SPLASH, false);
-		boolean from_logout = intent.getBooleanExtra(Constants.FROM_LOGOUT, false);
-		
-		if(from_splash && Constants.getApp().getUser() != null){
-			Utils.makeText(this, getString(R.string.welcome_back) + " " + Constants.getApp().getUser().getEmail());
-		}else if(from_logout){
+		boolean from_splash = intent.getBooleanExtra(Constants.FROM_SPLASH,
+				false);
+		boolean from_logout = intent.getBooleanExtra(Constants.FROM_LOGOUT,
+				false);
+
+		if (from_splash && Constants.getApp().getUser() != null) {
+			Utils.makeText(this, getString(R.string.welcome_back) + " "
+					+ Constants.getApp().getUser().getEmail());
+		} else if (from_logout) {
 			Utils.makeText(this, getString(R.string.logout_ok));
 		}
 	}
-	
-	private void initScreen(){
-		txt_search = (EditText)findViewById(R.id.txt_search);
-		spin_categories = (Spinner)findViewById(R.id.spin_categories);
-		btn_search = (Button)findViewById(R.id.btn_search);
-		btn_new_ad = (Button)findViewById(R.id.btn_new_ad);
-		img_publi = (ImageView)findViewById(R.id.img_publi);
+
+	private void initScreen() {
+		txt_search = (EditText) findViewById(R.id.txt_search);
+		spin_categories = (Spinner) findViewById(R.id.spin_categories);
+		btn_search = (Button) findViewById(R.id.btn_search);
+		btn_new_ad = (Button) findViewById(R.id.btn_new_ad);
+		img_publi = (ImageView) findViewById(R.id.img_publi);
 	}
-	
-	private void prepareControls(){
-		//Ponemos categorias
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,Constants.getApp().getCategories().getNames());
+
+	private void prepareControls() {
+		// Ponemos categorias
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_dropdown_item, Constants
+						.getApp().getCategories().getNames());
 		spin_categories.setAdapter(adapter);
-		
-		//Ponemos la publi
-		UrlImageViewHelper.setUrlDrawable(img_publi, Constants.getApp().getAd().getSrc());
+
+		// Ponemos la publi
+		UrlImageViewHelper.setUrlDrawable(img_publi, Constants.getApp().getAd()
+				.getSrc());
 		img_publi.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.getApp().getAd().getLink()));
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(Constants.getApp().getAd().getLink()));
 				startActivity(intent);
 			}
 		});
-		
-		//Botón buscar
+
+		// Botón buscar
 		btn_search.setOnClickListener(searchClick);
-		
-		//Botón nuevo anuncio
+
+		// Botón nuevo anuncio
 		btn_new_ad.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				//Abrir form para anuncios
+				// Abrir form para anuncios
 				openFormActivity();
 			}
 		});
 	}
-	
+
 	private OnClickListener searchClick = new OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
 			String query = txt_search.getText().toString().trim();
-			
-			//Checks...
-			if(query.equalsIgnoreCase("")){
-				Utils.toast("You need to write something to search!");
+
+			// Checks...
+			if (query.equalsIgnoreCase("")) {
+				Utils.makeInfo(MainActivity.this,
+						getResources().getString(R.string.query_null));
 				return;
 			}
-			
-			if(query.length() < 2){
-				Utils.toast("Query has to be 2 characters at least");
+
+			if (query.length() < 2) {
+				Utils.makeInfo(MainActivity.this,
+						getResources().getString(R.string.query_short));
 				return;
 			}
-			
-			//Category selected
-			int category_id = Constants.getApp().getCategories().get(spin_categories.getSelectedItemPosition()).getId();
-			
-			//Todo ok, pedimos resultados y mostramos loader
-			Handler handler = new Handler(){
+
+			// Category selected
+			int category_id = Constants.getApp().getCategories()
+					.get(spin_categories.getSelectedItemPosition()).getId();
+
+			// Todo ok, pedimos resultados y mostramos loader
+			Handler handler = new Handler() {
 				@Override
 				public void handleMessage(Message msg) {
 					super.handleMessage(msg);
-					
-					if(msg.what == Constants.OK){
+
+					if (msg.what == Constants.OK) {
 						openListActivity();
 					}
 				}
 			};
-			
+
 			Messenger messenger = new Messenger(handler);
-			
-			Intent intent = new Intent(MainActivity.this,WebService.class);
-			intent.putExtra(WebService.PARAM_OPERATION, WebService.OPERATION_SEARCH);
+
+			Intent intent = new Intent(MainActivity.this, WebService.class);
+			intent.putExtra(WebService.PARAM_OPERATION,
+					WebService.OPERATION_SEARCH);
 			intent.putExtra(WebService.PARAM_QUERY, query);
 			intent.putExtra(WebService.PARAM_CATEGORY_ID, category_id);
 			intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
 			startService(intent);
-			
+
 			showLoading(true);
 		}
 	};
-	
-	private void openFormActivity(){
-//		Intent intent = new Intent(this,FormActivity.class);
-//		startActivity(intent);
+
+	private void openFormActivity() {
+		if (Constants.getApp().getUser() != null) {
+			Intent intent = new Intent(this, FormActivity.class);
+			startActivity(intent);
+		} else {
+			Utils.makeInfo(this, getResources().getString(R.string.need_login));
+		}
 	}
-	
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

@@ -52,6 +52,10 @@
             android:label="@string/title_activity_list"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.FormActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <service
             android:name="es.mihx.huaxin.service.WebService"

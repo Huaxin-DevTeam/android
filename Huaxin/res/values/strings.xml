@@ -40,9 +40,28 @@
     <string name="share_via">Share via</string>
     <string name="share_subject">Anuncio en HUAXIN</string>
     
+    <string name="title">Título</string>
+    <string name="description">Descripción</string>
+    <string name="price">Precio</string>
+    <string name="premium">Premium</string>
+    <string name="phone">Telf.</string>
+    <string name="location">Ubicación</string>
+    
     <string name="username_notblank">Username cannot be blank.</string>
     <string name="password_notblank">Password cannot be blank.</string>
     <string name="error_no_favs">You don\'t have any favorites yet.</string>
+    <string name="need_login">You need to be logged in.</string>
+    <string name="query_null">You need to write something to search!</string>
+    <string name="query_short">Query has to be 2 characters at least</string>
+    <string name="fill_all_fields">Por favor, rellena todos los campos</string>
+    <string name="comm_error">Communication ERROR</string>
+    <string name="unknown_error">Error desconocido</string>
+    
+    <string name="one_week">1 semana</string>
+    <string name="two_weeks">2 semanas</string>
+    <string name="one_month">1 mes</string>
+    <string name="two_months">2 meses</string>
+    <string name="one_year">1 año</string>
     
 
 </resources>

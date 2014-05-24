@@ -1,5 +1,6 @@
 package es.mihx.huaxin.activity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import es.mihx.huaxin.service.WebService;
 import es.mihx.huaxin.utils.Constants;
 import es.mihx.huaxin.utils.Utils;
 
+@SuppressLint("HandlerLeak")
 public class BaseActivity extends ActionBarActivity {
 
 	protected SideNavigationView sideNavigationView;
@@ -55,13 +57,33 @@ public class BaseActivity extends ActionBarActivity {
 				// Validation clicking on side navigation item
 				switch (itemId) {
 				case R.id.sidemenu_favorites:
-					loadFavorites();
+					if (Constants.getApp().getUser() != null) {
+						loadFavorites();
+					} else {
+						sideNavigationView.hideMenu();
+						Utils.makeInfo(BaseActivity.this, getResources()
+								.getString(R.string.need_login));
+					}
+					break;
+				case R.id.sidemenu_myads:
+					loadMyads();
 					break;
 				case R.id.sidemenu_search:
 					Log.i("BaseActivity", "Click New Search...");
 					startActivity(new Intent(getApplicationContext(),
 							MainActivity.class));
 					// finish();
+					break;
+				case R.id.sidemenu_new_ad:
+					if (Constants.getApp().getUser() != null) {
+						startActivity(new Intent(getApplicationContext(),
+								FormActivity.class));
+					} else {
+						sideNavigationView.hideMenu();
+						Utils.makeInfo(BaseActivity.this, getResources()
+								.getString(R.string.need_login));
+					}
+
 					break;
 				case R.id.sidemenu_login:
 					startActivityForResult(new Intent(getApplicationContext(),
@@ -107,8 +129,8 @@ public class BaseActivity extends ActionBarActivity {
 
 	protected void loadFavorites() {
 		String favs = Utils.getFavorites();
-		
-		if(favs == null){
+
+		if (favs == null) {
 			Utils.makeInfo(this, getString(R.string.error_no_favs));
 			return;
 		}
@@ -130,6 +152,30 @@ public class BaseActivity extends ActionBarActivity {
 		Intent intent = new Intent(this, WebService.class);
 		intent.putExtra(WebService.PARAM_OPERATION, WebService.OPERATION_FAVS);
 		intent.putExtra(WebService.PARAM_JSON_LIST, favs);
+		intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
+		startService(intent);
+
+		showLoading(true);
+	}
+
+	protected void loadMyads() {
+
+		// Todo ok, pedimos resultados y mostramos loader
+		Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+
+				if (msg.what == Constants.OK) {
+					openListActivity();
+				}
+			}
+		};
+
+		Messenger messenger = new Messenger(handler);
+
+		Intent intent = new Intent(this, WebService.class);
+		intent.putExtra(WebService.PARAM_OPERATION, WebService.OPERATION_MYADS);
 		intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
 		startService(intent);
 

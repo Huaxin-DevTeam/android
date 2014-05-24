@@ -15,7 +15,7 @@
         android:title="@string/favorites"/>
     <item
         android:id="@+id/sidemenu_new_ad"
-        android:icon="@drawable/ic_favs"
+        android:icon="@drawable/ic_new_ad"
         android:title="@string/new_ad"/>
     <item
         android:id="@+id/sidemenu_myads"

@@ -9,5 +9,7 @@ public class API {
 	public static final String LOGIN = HOST + "/login";
 	public static final String AUTOLOGIN = HOST + "/autologin";
 	public static final String LIST = HOST + "/list";
+	public static final String MYADS = HOST + "/myads";
+	public static final String NEWAD = HOST + "/create";
 
 }
