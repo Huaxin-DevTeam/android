@@ -28,6 +28,8 @@ public class WebService extends BaseService {
 	public static final int OPERATION_FAVS = 4;
 	public static final int OPERATION_MYADS = 5;
 	public static final int OPERATION_NEW_AD = 6;
+	public static final int OPERATION_EDIT = 7;
+	public static final int OPERATION_DELETE = 8;
 
 	/* PARAMETERS */
 	public static final String PARAM_OPERATION = "OPERATION";
@@ -44,6 +46,8 @@ public class WebService extends BaseService {
 	public static final String PARAM_LOCATION = "LOCATION";
 	public static final String PARAM_PREMIUM = "PREMIUM";
 	public static final String PARAM_DURATION = "DURATION";
+	public static final String PARAM_IMAGE = "IMAGE";
+	public static final String PARAM_ITEM_ID = "ITEM_ID";
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
@@ -83,20 +87,90 @@ public class WebService extends BaseService {
 			String location = intent.getStringExtra(PARAM_LOCATION);
 			int duration = intent.getIntExtra(PARAM_DURATION, -1);
 			boolean premium = intent.getBooleanExtra(PARAM_PREMIUM, false);
+			String image = intent.getStringExtra(PARAM_IMAGE);
 
 			newAd(title, description, category_id, price, phone, location,
-					duration, premium);
+					duration, premium, image);
 
 			break;
+		case OPERATION_EDIT:
+			String ttitle = intent.getStringExtra(PARAM_TITLE);
+			String ddescription = intent.getStringExtra(PARAM_DESCRIPTION);
+			int ccategory_id = intent.getIntExtra(PARAM_CATEGORY_ID, -1);
+			float pprice = intent.getFloatExtra(PARAM_PRICE, -1);
+			String pphone = intent.getStringExtra(PARAM_PHONE);
+			String llocation = intent.getStringExtra(PARAM_LOCATION);
+			int itemId = intent.getIntExtra(PARAM_ITEM_ID, -1);
+			String iimage = intent.getStringExtra(PARAM_IMAGE);
+
+			editAd(itemId, ttitle, ddescription, ccategory_id, pprice, pphone,
+					llocation, iimage);
+
+			break;
+
+		case OPERATION_DELETE:
+			int id = intent.getIntExtra(PARAM_ITEM_ID, -1);
+			delete(id);
+			break;
+
 		default:
 			Log.e(TAG, "Operation not found: " + op);
 			this.sendMessage(Constants.KO, null);
 		}
 	}
 
+	private void delete(int id) {
+		try {
+			JSONObject params = new JSONObject();
+			params.put("token", Constants.getApp().getUser().getToken());
+			params.put("item_id", id);
+
+			Log.v(TAG, params.toString(1));
+
+			Message msg = this.post(API.DELETE, params);
+
+			if (msg.what == Constants.HTTP_OK) {
+
+				try {
+					JSONObject json = (JSONObject) msg.obj;
+					String message = json.getString("message");
+
+					this.sendMessage(Constants.OK, message);
+
+				} catch (JSONException e) {
+
+					// Mostrar error!
+					try {
+
+						JSONObject json = (JSONObject) msg.obj;
+						JSONObject error = json.getJSONObject("error");
+
+						String errmsg = error.optString("message");
+						if (errmsg == null)
+							errmsg = error.optString("description");
+
+						this.sendMessage(Constants.KO, errmsg);
+
+					} catch (JSONException e1) {
+						Log.e(TAG + "::JSONException", e.getMessage());
+						this.sendMessage(Constants.KO, getResources()
+								.getString(R.string.unknown_error));
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Communication ERROR");
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.comm_error));
+			}
+		} catch (JSONException e1) {
+			Log.e(TAG + "::JSONException", e1.getMessage());
+		}
+	}
+
 	private void newAd(String title, String description, int category_id,
 			float price, String phone, String location, int duration,
-			boolean premium) {
+			boolean premium, String image) {
 
 		try {
 			JSONObject params = new JSONObject();
@@ -109,6 +183,9 @@ public class WebService extends BaseService {
 			params.put("location", location);
 			params.put("duration", duration);
 			params.put("premium", premium);
+			params.put("image", image);
+
+			Log.v(TAG, params.toString(1));
 
 			Message msg = this.post(API.NEWAD, params);
 
@@ -136,16 +213,80 @@ public class WebService extends BaseService {
 
 					} catch (JSONException e1) {
 						Log.e(TAG + "::JSONException", e.getMessage());
-						this.sendMessage(Constants.KO, getResources().getString(R.string.unknown_error));
+						this.sendMessage(Constants.KO, getResources()
+								.getString(R.string.unknown_error));
 					}
 				}
 
 			} else {
 				Log.e(TAG, "Communication ERROR");
-				this.sendMessage(Constants.KO, getResources().getString(R.string.comm_error));
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.comm_error));
 			}
 		} catch (JSONException e1) {
 			Log.e(TAG + "::JSONException", e1.getMessage());
+		}
+
+	}
+
+	private void editAd(int itemId, String title, String description,
+			int category_id, float price, String phone, String location,
+			String image) {
+
+		try {
+			JSONObject params = new JSONObject();
+			params.put("token", Constants.getApp().getUser().getToken());
+			params.put("item_id", itemId);
+			params.put("title", title);
+			params.put("description", description);
+			params.put("category_id", category_id);
+			params.put("price", price);
+			params.put("phone", phone);
+			params.put("location", location);
+			params.put("image", image);
+
+			Log.v(TAG, params.toString(1));
+
+			Message msg = this.post(API.EDIT, params);
+
+			if (msg.what == Constants.HTTP_OK) {
+
+				try {
+					JSONObject json = (JSONObject) msg.obj;
+					String message = json.getString("message");
+
+					this.sendMessage(Constants.OK, message);
+
+				} catch (JSONException e) {
+
+					// Mostrar error!
+					try {
+
+						JSONObject json = (JSONObject) msg.obj;
+						JSONObject error = json.getJSONObject("error");
+
+						String errmsg = error.optString("message");
+						if (errmsg == null)
+							errmsg = error.optString("description");
+
+						this.sendMessage(Constants.KO, errmsg);
+
+					} catch (JSONException e1) {
+						Log.e(TAG + "::JSONException", e.getMessage());
+						this.sendMessage(Constants.KO, getResources()
+								.getString(R.string.unknown_error));
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Communication ERROR");
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.comm_error));
+			}
+		} catch (JSONException e1) {
+			Log.e(TAG + "::JSONException", e1.getMessage());
+			this.sendMessage(Constants.KO,
+					getResources().getString(R.string.unknown_error));
 		}
 
 	}
@@ -181,7 +322,8 @@ public class WebService extends BaseService {
 
 			} catch (JSONException e) {
 				Log.e(TAG, e.getMessage());
-				this.sendMessage(Constants.KO, null);
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.unknown_error));
 			}
 
 		}
@@ -215,11 +357,13 @@ public class WebService extends BaseService {
 				this.sendMessage(Constants.OK, json);
 			} catch (JSONException e) {
 				Log.e(TAG, e.getMessage());
-				this.sendMessage(Constants.KO, null);
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.unknown_error));
 			}
 		} else {
 			Log.e(TAG, "ERROR");
-			this.sendMessage(Constants.KO, null);
+			this.sendMessage(Constants.KO,
+					getResources().getString(R.string.comm_error));
 		}
 	}
 
@@ -242,7 +386,7 @@ public class WebService extends BaseService {
 				ItemList list = new ItemList();
 				for (int i = 0; i < items.length(); i++) {
 					JSONObject o = items.getJSONObject(i);
-					Item item = new Item(o.getInt("id"),
+					Item item = new Item(o.getInt("id"), o.getInt("author_id"),
 							o.getInt("category_id"), o.getString("title"),
 							o.getString("description"), o.getDouble("price"),
 							o.getString("phone"), o.getString("location"),
@@ -260,12 +404,14 @@ public class WebService extends BaseService {
 
 			} catch (JSONException e) {
 				Log.e(TAG + "::JSONException", e.getMessage());
-				this.sendMessage(Constants.KO, null);
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.unknown_error));
 			}
 
 		} else {
 			Log.e(TAG, "Communication ERROR");
-			this.sendMessage(Constants.KO, null);
+			this.sendMessage(Constants.KO,
+					getResources().getString(R.string.comm_error));
 		}
 	}
 
@@ -307,12 +453,14 @@ public class WebService extends BaseService {
 				}
 			} catch (JSONException e) {
 				Log.e(TAG + "::JSONException", e.getMessage());
-				this.sendMessage(Constants.KO, null);
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.unknown_error));
 			}
 
 		} else {
 			Log.e(TAG, "Communication ERROR");
-			this.sendMessage(Constants.KO, null);
+			this.sendMessage(Constants.KO,
+					getResources().getString(R.string.comm_error));
 		}
 	}
 
@@ -332,7 +480,8 @@ public class WebService extends BaseService {
 					for (int i = 0; i < items.length(); i++) {
 						JSONObject o = items.getJSONObject(i);
 						Item item = new Item(o.getInt("id"),
-								o.getInt("category_id"), o.getString("title"),
+								o.getInt("author_id"), o.getInt("category_id"),
+								o.getString("title"),
 								o.getString("description"),
 								o.getDouble("price"), o.getString("phone"),
 								o.getString("location"),
@@ -350,15 +499,19 @@ public class WebService extends BaseService {
 
 				} catch (JSONException e) {
 					Log.e(TAG + "::JSONException", e.getMessage());
-					this.sendMessage(Constants.KO, null);
+					this.sendMessage(Constants.KO,
+							getResources().getString(R.string.unknown_error));
 				}
 
 			} else {
 				Log.e(TAG, "Communication ERROR");
-				this.sendMessage(Constants.KO, null);
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.comm_error));
 			}
 		} catch (JSONException e1) {
 			Log.e(TAG + "::JSONException", e1.getMessage());
+			this.sendMessage(Constants.KO,
+					getResources().getString(R.string.unknown_error));
 		}
 	}
 
@@ -379,7 +532,8 @@ public class WebService extends BaseService {
 					for (int i = 0; i < items.length(); i++) {
 						JSONObject o = items.getJSONObject(i);
 						Item item = new Item(o.getInt("id"),
-								o.getInt("category_id"), o.getString("title"),
+								o.getInt("author_id"), o.getInt("category_id"),
+								o.getString("title"),
 								o.getString("description"),
 								o.getDouble("price"), o.getString("phone"),
 								o.getString("location"),
@@ -397,15 +551,19 @@ public class WebService extends BaseService {
 
 				} catch (JSONException e) {
 					Log.e(TAG + "::JSONException", e.getMessage());
-					this.sendMessage(Constants.KO, null);
+					this.sendMessage(Constants.KO,
+							getResources().getString(R.string.unknown_error));
 				}
 
 			} else {
 				Log.e(TAG, "Communication ERROR");
-				this.sendMessage(Constants.KO, null);
+				this.sendMessage(Constants.KO,
+						getResources().getString(R.string.comm_error));
 			}
 		} catch (JSONException e1) {
 			Log.e(TAG + "::JSONException", e1.getMessage());
+			this.sendMessage(Constants.KO,
+					getResources().getString(R.string.unknown_error));
 		}
 	}
 }

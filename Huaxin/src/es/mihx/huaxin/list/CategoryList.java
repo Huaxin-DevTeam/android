@@ -34,4 +34,12 @@ public class CategoryList extends ArrayList<Category> {
 		
 		return null;
 	}
+	
+	public int getPos(int categoryId){
+		for(int i=0;i<this.size();i++)
+			if(this.get(i).getId() == categoryId)
+				return i;
+		
+		return 0;
+	}
 }

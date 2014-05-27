@@ -8,6 +8,7 @@ import java.util.Locale;
 public class Item {
 
 	private int id;
+	private int authorId;
 	private int categoryId;
 	private String title;
 	private String description;
@@ -20,10 +21,11 @@ public class Item {
 	private int numViews;
 	private boolean premium;
 
-	public Item(int id, int categoryId, String title, String description,
+	public Item(int id, int authorId, int categoryId, String title, String description,
 			double price, String phone, String location, String imageUrl,
 			String published, String end, int numViews, int premium) {
 		this.id = id;
+		this.authorId = authorId;
 		this.categoryId = categoryId;
 		this.title = title;
 		this.description = description;
@@ -149,5 +151,13 @@ public class Item {
 
 	public void setPremium(boolean premium) {
 		this.premium = premium;
+	}
+
+	public int getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(int authorId) {
+		this.authorId = authorId;
 	}
 }

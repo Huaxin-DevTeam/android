@@ -141,8 +141,11 @@ public class BaseActivity extends ActionBarActivity {
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 
+				showLoading(false);
 				if (msg.what == Constants.OK) {
 					openListActivity();
+				} else if (msg.obj != null) {
+					Utils.makeError(BaseActivity.this, (String) msg.obj);
 				}
 			}
 		};
@@ -166,8 +169,12 @@ public class BaseActivity extends ActionBarActivity {
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 
+				showLoading(false);
 				if (msg.what == Constants.OK) {
+
 					openListActivity();
+				} else if (msg.obj != null) {
+					Utils.makeError(BaseActivity.this, (String) msg.obj);
 				}
 			}
 		};

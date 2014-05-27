@@ -63,5 +63,7 @@
     <string name="two_months">2 meses</string>
     <string name="one_year">1 año</string>
     
+    <string name="action_edit">Editar</string>
+    <string name="action_delete">Eliminar</string>
 
 </resources>

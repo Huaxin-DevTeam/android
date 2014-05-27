@@ -24,6 +24,7 @@ import org.apache.http.protocol.HttpContext;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import es.mihx.huaxin.utils.Constants;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Handler;
@@ -40,6 +41,8 @@ public class BaseService extends IntentService {
 	protected Message message;
 	protected Messenger messenger;
 	protected Handler handler;
+
+	Message msg = null;
 
 	static CookieStore cookieStore = new BasicCookieStore();
 
@@ -90,12 +93,15 @@ public class BaseService extends IntentService {
 			// Construimos llamada con parametros
 			if (json != null) {
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-				
-				nameValuePairs.add(new BasicNameValuePair("params",json.toString()));
-//				for (int i = 0; i < keys.length; i++) {
-//					nameValuePairs.add(new BasicNameValuePair(keys[i], values[i]));
-//				}
-				HttpEntity entity = new UrlEncodedFormEntity(nameValuePairs,"utf-8");
+
+				nameValuePairs.add(new BasicNameValuePair("params", json
+						.toString()));
+				// for (int i = 0; i < keys.length; i++) {
+				// nameValuePairs.add(new BasicNameValuePair(keys[i],
+				// values[i]));
+				// }
+				HttpEntity entity = new UrlEncodedFormEntity(nameValuePairs,
+						"utf-8");
 				request.addHeader(entity.getContentType());
 				request.setEntity(entity);
 				Log.i("POST data", nameValuePairs.toString());
@@ -116,27 +122,42 @@ public class BaseService extends IntentService {
 			while ((line = in.readLine()) != null) {
 				accum += line + NL;
 			}
-			
+
 			Log.v(TAG + "::Response", accum);
 
-			Message msg = new Message();
+			msg = new Message();
 			msg.what = response.getStatusLine().getStatusCode();
 			msg.obj = new JSONObject(accum);
 
 			return msg;
 
 		} catch (UnsupportedEncodingException e) {
-			Log.e(TAG+"::UnsupportedEncodingException", e.getMessage());
+			Log.e(TAG + "::UnsupportedEncodingException", e.getMessage());
+			msg = new Message();
+			msg.what = Constants.KO;
+			msg.obj = e.getMessage();
 		} catch (ClientProtocolException e) {
-			Log.e(TAG+"::ClientProtocolException", e.getMessage());
+			Log.e(TAG + "::ClientProtocolException", e.getMessage());
+			msg = new Message();
+			msg.what = Constants.KO;
+			msg.obj = e.getMessage();
 		} catch (IllegalStateException e) {
-			Log.e(TAG+"::IllegalStateException", e.getMessage());
+			Log.e(TAG + "::IllegalStateException", e.getMessage());
+			msg = new Message();
+			msg.what = Constants.KO;
+			msg.obj = e.getMessage();
 		} catch (IOException e) {
-			Log.e(TAG+"::IOException", e.getMessage());
+			Log.e(TAG + "::IOException", e.getMessage());
+			msg = new Message();
+			msg.what = Constants.KO;
+			msg.obj = e.getMessage();
 		} catch (JSONException e) {
-			Log.e(TAG+"::JSONException", e.getMessage());
+			Log.e(TAG + "::JSONException", e.getMessage());
+			msg = new Message();
+			msg.what = Constants.KO;
+			msg.obj = e.getMessage();
 		}
-		return null;
+		return msg;
 	}
 
 }
