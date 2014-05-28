@@ -9,9 +9,11 @@ import android.os.Message;
 import android.util.Log;
 import es.mihx.huaxin.R;
 import es.mihx.huaxin.list.CategoryList;
+import es.mihx.huaxin.list.CreditsList;
 import es.mihx.huaxin.list.ItemList;
 import es.mihx.huaxin.model.Ad;
 import es.mihx.huaxin.model.Category;
+import es.mihx.huaxin.model.CreditOption;
 import es.mihx.huaxin.model.Item;
 import es.mihx.huaxin.model.User;
 import es.mihx.huaxin.utils.Constants;
@@ -348,6 +350,20 @@ public class WebService extends BaseService {
 					list.add(c);
 				}
 				Constants.getApp().setCategories(list);
+
+				// Guardar opciones de creditos
+				JSONArray meths = json.getJSONArray("credit_options");
+				CreditsList creds = new CreditsList();
+				for (int i = 0; i < meths.length(); i++) {
+					JSONObject me = meths.getJSONObject(i);
+					CreditOption c = new CreditOption(me.getInt("id"),
+							me.getString("name"), me.getInt("num_credits"),
+							me.getDouble("price"), me.getString("text"),
+							me.getString("sku1"));
+					Log.v(TAG, "Adding credits: " + c.getName());
+					creds.add(c);
+				}
+				Constants.getApp().setCreditOptions(creds);
 
 				// Guardar anuncio
 				JSONObject ad = json.getJSONObject("ad");

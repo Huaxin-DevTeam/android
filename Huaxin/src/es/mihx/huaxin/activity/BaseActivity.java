@@ -28,6 +28,7 @@ public class BaseActivity extends ActionBarActivity {
 	protected ProgressDialog progressDialog;
 
 	private int REQ_LOGIN = 1;
+	private int REQ_PURCHASE = 2;
 
 	public HuaxinApp getApp() {
 		return (HuaxinApp) getApplication();
@@ -88,6 +89,11 @@ public class BaseActivity extends ActionBarActivity {
 				case R.id.sidemenu_login:
 					startActivityForResult(new Intent(getApplicationContext(),
 							LoginActivity.class), REQ_LOGIN);
+					break;
+
+				case R.id.sidemenu_buy:
+					startActivityForResult(new Intent(getApplicationContext(),
+							PurchaseActivity.class), REQ_PURCHASE);
 					break;
 
 				case R.id.sidemenu_logout:

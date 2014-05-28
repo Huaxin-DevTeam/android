@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:padding="25dip"
+    android:baselineAligned="false"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#54a4ca"
+        android:padding="20dip" />
+
+    <TextView
+        android:id="@+id/txt_num_credits"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#2A80A4"
+        android:padding="20dip" />
+
+    <TextView
+        android:id="@+id/txt_price"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#E0EFF5"
+        android:padding="20dip" />
+
+    <TextView
+        android:id="@+id/txt_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#E0EFF5"
+        android:padding="20dip" />
+
+</LinearLayout>

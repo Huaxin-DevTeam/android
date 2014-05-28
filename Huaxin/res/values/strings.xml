@@ -28,6 +28,8 @@
     
     <string name="loading">Cargando…</string>
     <string name="anuncios">anuncios</string>
+    <string name="credits">积分</string>
+    
     <string name="username">Username</string>
     <string name="new_search">Nueva Búsqueda</string>
     <string name="favorites">Favoritos</string>

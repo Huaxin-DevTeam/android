@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    
 
     <application
         android:name=".HuaxinApp"
@@ -55,6 +57,10 @@
         </activity>
         <activity
             android:name=".activity.FormActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.PurchaseActivity"
             android:screenOrientation="portrait" >
         </activity>
 
