@@ -77,7 +77,7 @@
                 android:id="@+id/lbl_duration"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Duration" />
+                android:text="@string/duration" />
 
             <SeekBar
                 android:id="@+id/seek_duration"
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="15dip"
-                    android:text="Premium"
+                    android:text="@string/premium"
                     android:textStyle="bold" />
 
                 <ToggleButton
@@ -118,7 +118,7 @@
                     android:layout_marginRight="5dip"
                     android:layout_marginTop="15dip"
                     android:layout_toLeftOf="@+id/total_credits"
-                    android:text="Total credits"
+                    android:text="@string/total_credits"
                     android:textStyle="bold" />
 
                 <TextView
@@ -159,7 +159,7 @@
                     android:drawableLeft="@drawable/ic_upload"
                     android:drawablePadding="15dip"
                     android:padding="10dip"
-                    android:text="Subir foto"
+                    android:text="@string/subir_foto"
                     android:textColor="@android:color/white" />
             </RelativeLayout>
 

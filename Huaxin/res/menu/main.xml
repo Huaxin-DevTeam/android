@@ -1,12 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="es.mihx.huaxin.MainActivity" >
+    tools:context="es.mihx.app.MainActivity" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_openMenu"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+        android:title="@string/action_menu"
+        android:icon="@drawable/ic_action_bulleted_list"
+        app:showAsAction="always"/>
 
 </menu>

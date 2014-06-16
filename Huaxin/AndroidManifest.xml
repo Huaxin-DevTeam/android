@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="es.mihx.huaxin"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="es.mihx.app"
+    android:versionCode="2"
+    android:versionName="1.0.1" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -15,13 +15,13 @@
     
 
     <application
-        android:name=".HuaxinApp"
+        android:name="es.mihx.app.HuaxinApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="es.mihx.huaxin.activity.SplashActivity"
+            android:name="es.mihx.app.activity.SplashActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -32,40 +32,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="es.mihx.huaxin.activity.MainActivity"
+            android:name="es.mihx.app.activity.MainActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="es.mihx.huaxin.activity.ListActivity"
+            android:name="es.mihx.app.activity.ListActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_list"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="es.mihx.huaxin.activity.DetailActivity"
+            android:name="es.mihx.app.activity.DetailActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_list"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="es.mihx.huaxin.activity.LoginActivity"
+            android:name="es.mihx.app.activity.LoginActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_list"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.FormActivity"
+            android:name="es.mihx.app.activity.RegisterActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_list"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.PurchaseActivity"
+            android:name="es.mihx.app.activity.FormActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="es.mihx.app.activity.PurchaseActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <service
-            android:name="es.mihx.huaxin.service.WebService"
+            android:name="es.mihx.app.service.WebService"
             android:enabled="true" />
     </application>
 

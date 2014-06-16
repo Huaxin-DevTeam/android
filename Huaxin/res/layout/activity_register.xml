@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/layout_wrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dip"
+                android:contentDescription="@string/descr_logo"
+                android:src="@drawable/logo" />
+
+            <EditText
+                android:id="@+id/txt_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dip"
+                android:ems="10"
+                android:hint="@string/reg_email"
+                android:inputType="textWebEmailAddress"
+                android:singleLine="true" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txt_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dip"
+                android:ems="10"
+                android:hint="@string/reg_phone"
+                android:inputType="phone"
+                android:singleLine="true" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txt_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dip"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:singleLine="true" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txt_password2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:singleLine="true" >
+            </EditText>
+
+            <Button
+                android:id="@+id/btn_register"
+                style="@style/blue_button"
+                android:text="@string/register" />
+        </LinearLayout>
+    </ScrollView>
+
+    <com.devspark.sidenavigation.SideNavigationView
+        android:id="@+id/side_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </com.devspark.sidenavigation.SideNavigationView>
+
+</RelativeLayout>

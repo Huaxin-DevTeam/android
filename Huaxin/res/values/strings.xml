@@ -2,70 +2,70 @@
 <resources>
 
     <string name="app_name">Huaxin</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_main">Welcome!</string>
+    <string name="hello_world">HOLA 亲!</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_main">最专业的海外华人信息平台!</string>
     <string name="title_activity_list">Huaxin</string>
-    
-    <string name="title_search">BÚSQUEDA</string>
-    <string name="title_whatyousearch">¿QUÉ BUSCAS?</string>
-    <string name="title_description">DESCRIPCION</string>
-    <string name="title_category">CATEGORÍA</string>
-    <string name="title_location">UBICACIÓN</string>
-    
-    <string name="search_keywords">Introduce tu búsuqeda</string>
-    <string name="phone_or_email">Teléfono o email</string>
-    <string name="password">Password</string>
-    <string name="welcome_back">Welcome back, </string>
-    <string name="logout_ok">Logout successful!</string>
-    
-    <string name="btn_search">Buscar</string>
-    <string name="btn_new_ad">Publicar anuncio</string>
-    
+    <string name="title_search">信息搜索</string>
+    <string name="title_whatyousearch">您找什么?</string>
+    <string name="title_description">描述</string>
+    <string name="title_category">目录</string>
+    <string name="title_location">地点</string>
+    <string name="search_keywords">输入关键词</string>
+    <string name="phone_or_email">电话或邮箱</string>
+    <string name="reg_phone">电话号码</string>
+    <string name="reg_email">邮箱</string>
+    <string name="password">密码</string>
+    <string name="confirm_password">密码确认</string>
+    <string name="welcome_back">欢迎回来。 </string>
+    <string name="logout_ok">成功登出!</string>
+    <string name="btn_search">搜索</string>
+    <string name="btn_new_ad">发布信息</string>
     <string name="descr_logo">HUAXIN Logo</string>
-    <string name="descr_publi">HUAXIN Publi</string>
-    <string name="descr_img">ITEM Image</string>
-    
-    <string name="loading">Cargando…</string>
-    <string name="anuncios">anuncios</string>
+    <string name="descr_publi">HUAXIN 广告</string>
+    <string name="descr_img">图片</string>
+    <string name="loading">正在启动...</string>
+    <string name="anuncios">信息</string>
     <string name="credits">积分</string>
-    
-    <string name="username">Username</string>
-    <string name="new_search">Nueva Búsqueda</string>
-    <string name="favorites">Favoritos</string>
-    <string name="new_ad">Nuevo Anuncio</string>
-    <string name="my_ads">Mis Anuncios</string>
-    <string name="buy_credits">Comprar Créditos</string>
-    <string name="login">Login</string>
-    <string name="logout">Logout</string>
-    
-    <string name="share_via">Share via</string>
-    <string name="share_subject">Anuncio en HUAXIN</string>
-    
-    <string name="title">Título</string>
-    <string name="description">Descripción</string>
-    <string name="price">Precio</string>
+    <string name="username">用户名</string>
+    <string name="new_search">重新搜索</string>
+    <string name="favorites">收藏夹</string>
+    <string name="new_ad">新信息</string>
+    <string name="my_ads">我的信息</string>
+    <string name="buy_credits">购买积分</string>
+    <string name="login">登录</string>
+    <string name="logout">登出</string>
+    <string name="register">注册</string>
+    <string name="share_via">分享</string>
+    <string name="share_subject">来自华信的信息</string>
+    <string name="title">标题</string>
+    <string name="description">描述</string>
+    <string name="price">价格</string>
     <string name="premium">Premium</string>
-    <string name="phone">Telf.</string>
-    <string name="location">Ubicación</string>
-    
-    <string name="username_notblank">Username cannot be blank.</string>
-    <string name="password_notblank">Password cannot be blank.</string>
-    <string name="error_no_favs">You don\'t have any favorites yet.</string>
-    <string name="need_login">You need to be logged in.</string>
-    <string name="query_null">You need to write something to search!</string>
-    <string name="query_short">Query has to be 2 characters at least</string>
-    <string name="fill_all_fields">Por favor, rellena todos los campos</string>
-    <string name="comm_error">Communication ERROR</string>
-    <string name="unknown_error">Error desconocido</string>
-    
-    <string name="one_week">1 semana</string>
-    <string name="two_weeks">2 semanas</string>
-    <string name="one_month">1 mes</string>
-    <string name="two_months">2 meses</string>
-    <string name="one_year">1 año</string>
-    
-    <string name="action_edit">Editar</string>
-    <string name="action_delete">Eliminar</string>
+    <string name="phone">电话号码</string>
+    <string name="location">地点</string>
+    <string name="username_notblank">用户名不能为空。</string>
+    <string name="password_notblank">密码不能为空。</string>
+    <string name="error_no_favs">您没有任何收藏。</string>
+    <string name="need_login">您需要登录。</string>
+    <string name="query_null">您需要填写搜索内容。</string>
+    <string name="query_short">最少需要两个字符。</string>
+    <string name="fill_all_fields">请填写所有的空格。</string>
+    <string name="all_fields_required">所有的空格是必须要填写的。</string>
+    <string name="pwd_not_match">密码不正确。</string>
+    <string name="comm_error">通讯出错。</string>
+    <string name="unknown_error">未知的错误。</string>
+    <string name="one_week">1 周</string>
+    <string name="two_weeks">2 周</string>
+    <string name="one_month">1 个月</string>
+    <string name="two_months">2 个月</string>
+    <string name="one_year">1 年</string>
+    <string name="action_edit">编辑</string>
+    <string name="action_delete">删除</string>
+    <string name="action_menu">Menu</string>
+    <string name="title_phone">电话号码</string>
+    <string name="total_credits">积分总数</string>
+    <string name="duration">发布期限</string>
+    <string name="subir_foto">上传图片</string>
 
 </resources>

@@ -17,5 +17,10 @@
         android:id="@+id/sidemenu_login"
         android:icon="@drawable/ic_login"
         android:title="@string/login"/>
+    
+    <item
+        android:id="@+id/sidemenu_register"
+        android:icon="@drawable/ic_user"
+        android:title="@string/register"/>
 
 </menu>

@@ -2,36 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:padding="25dip"
     android:baselineAligned="false"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="25dip" >
 
     <TextView
         android:id="@+id/txt_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#54a4ca"
-        android:padding="20dip" />
+        android:gravity="center_horizontal"
+        android:padding="7dip"
+        android:textSize="9pt"
+        android:text="name"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/txt_num_credits"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#2A80A4"
-        android:padding="20dip" />
+        android:gravity="center_horizontal"
+        android:padding="10dip"
+        android:textSize="11pt"
+        android:text="2 credits"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/txt_price"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#E0EFF5"
-        android:padding="20dip" />
+        android:gravity="center_horizontal"
+        android:padding="20dip"
+        android:textSize="13pt"
+        android:text="2 €"
+        android:textColor="#2A80A4" />
 
     <TextView
         android:id="@+id/txt_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#E0EFF5"
-        android:padding="20dip" />
+        android:gravity="center_horizontal"
+        android:padding="10dip"
+        android:textSize="8pt"
+        android:text="ideal para un solo anuncio de un par de días"
+        android:textColor="#2A80A4" />
 
 </LinearLayout>
