@@ -19,7 +19,7 @@ public class Constants {
 
 	public static final int HTTP_OK = 200;
 
-	public static final String BASEURL = "http://dev.mihx.es";
+	public static final String BASEURL = "http://www.mihx.es";
 	public static final String VIEWITEMURL = "/view/";
 
 	public static final String FROM_SPLASH = "FROM_SPLASH";

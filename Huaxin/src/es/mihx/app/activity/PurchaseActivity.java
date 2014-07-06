@@ -215,7 +215,7 @@ public class PurchaseActivity extends BaseActivity {
 			if (result.isFailure()) {
 				Log.e(TAG, "Error purchasing: " + result);
 				showLoading(false);
-				Utils.makeError(PurchaseActivity.this, "Error en la compra.");
+				Utils.makeError(PurchaseActivity.this, getString(R.string.error_compra));
 				return;
 			}
 
@@ -298,7 +298,7 @@ public class PurchaseActivity extends BaseActivity {
 			Log.e(TAG, "Error purchasing. Authenticity verification failed.");
 			showLoading(false);
 			Utils.makeError(PurchaseActivity.this,
-					"Error en la validación del usuario.");
+					getString(R.string.error_validation));
 			return;
 		}
 

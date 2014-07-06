@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,8 +74,9 @@ public class MainActivity extends BaseActivity {
 		spin_categories.setAdapter(adapter);
 
 		// Ponemos la publi
-		UrlImageViewHelper.setUrlDrawable(img_publi, Constants.getApp().getAd()
-				.getSrc());
+		String url = Uri.encode(Constants.BASEURL + Constants.getApp().getAd().getSrc(),":./_");
+		UrlImageViewHelper.setUrlDrawable(img_publi,url);
+		Log.w("setting publi...",url);
 		img_publi.setOnClickListener(new OnClickListener() {
 
 			@Override

@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -113,9 +112,6 @@ public class DetailActivity extends BaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (Constants.getApp().getUser() != null
 				&& item.getAuthorId() == Constants.getApp().getUser().getId()) {
-			Log.i("tattt", "item.getAuthorId(): " + item.getAuthorId());
-			Log.i("tattt", "app.getUserId(): "
-					+ Constants.getApp().getUser().getId());
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.topmenu, menu);
 		}
@@ -150,9 +146,9 @@ public class DetailActivity extends BaseActivity {
 
 	private void deleteItem() {
 		AlertDialog.Builder builder = new Builder(this);
-		builder.setTitle("Please, confirm deletion.");
-		builder.setMessage("Are you sure you want to delete? This cannot be undone.");
-		builder.setPositiveButton("Delete",
+		builder.setTitle(R.string.confirm_deletion);
+		builder.setMessage(R.string.confirm_delete);
+		builder.setPositiveButton(R.string.delete,
 				new DialogInterface.OnClickListener() {
 
 					@Override
@@ -198,7 +194,7 @@ public class DetailActivity extends BaseActivity {
 
 					}
 				});
-		builder.setNegativeButton("Cancel",
+		builder.setNegativeButton(R.string.cancel,
 				new DialogInterface.OnClickListener() {
 
 					@Override

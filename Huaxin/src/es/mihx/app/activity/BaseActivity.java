@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.bugsense.trace.BugSenseHandler;
+import com.crittercism.app.Crittercism;
 import com.devspark.sidenavigation.ISideNavigationCallback;
 import com.devspark.sidenavigation.SideNavigationView;
 
@@ -38,6 +40,10 @@ public class BaseActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		BugSenseHandler.initAndStartSession(BaseActivity.this, "c85f9471");
+		Crittercism.initialize(getApplicationContext(), "539f28dab573f121a7000002");
+
 		setContentView(R.layout.activity_blank);
 	}
 
@@ -48,6 +54,7 @@ public class BaseActivity extends ActionBarActivity {
 
 		if (Constants.getApp().getUser() != null) {
 			setMenuForUser();
+			BugSenseHandler.addCrashExtraData("user", Constants.getApp().getUser().getPhone());
 		} else {
 			setMenuForAnonymous();
 		}
@@ -59,13 +66,7 @@ public class BaseActivity extends ActionBarActivity {
 				// Validation clicking on side navigation item
 				switch (itemId) {
 				case R.id.sidemenu_favorites:
-					if (Constants.getApp().getUser() != null) {
-						loadFavorites();
-					} else {
-						sideNavigationView.hideMenu();
-						Utils.makeInfo(BaseActivity.this, getResources()
-								.getString(R.string.need_login));
-					}
+					loadFavorites();
 					break;
 				case R.id.sidemenu_myads:
 					loadMyads();
@@ -91,7 +92,7 @@ public class BaseActivity extends ActionBarActivity {
 					startActivityForResult(new Intent(getApplicationContext(),
 							LoginActivity.class), REQ_LOGIN);
 					break;
-					
+
 				case R.id.sidemenu_register:
 					startActivityForResult(new Intent(getApplicationContext(),
 							RegisterActivity.class), REQ_REG);
@@ -136,14 +137,14 @@ public class BaseActivity extends ActionBarActivity {
 				Utils.makeText(this, message);
 				setMenuForUser();
 			}
-		}else
-		if (requestCode == REQ_REG) {
+		} else if (requestCode == REQ_REG) {
 			// Make sure the request was successful
 			if (resultCode == RESULT_OK) {
 				String message = data.getStringExtra("message");
-				Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+				Intent intent = new Intent(getApplicationContext(),
+						LoginActivity.class);
 				intent.putExtra("message", message);
-				//setMenuForUser();
+				// setMenuForUser();
 				startActivityForResult(intent, REQ_LOGIN);
 			}
 		}
@@ -259,6 +260,12 @@ public class BaseActivity extends ActionBarActivity {
 		creds = add ? creds + num : creds - num;
 		user.setNum_credits(creds);
 		setMenuForUser();
+	}
+
+	@Override
+	protected void onDestroy() {
+		BugSenseHandler.closeSession(BaseActivity.this);
+		super.onDestroy();
 	}
 
 }

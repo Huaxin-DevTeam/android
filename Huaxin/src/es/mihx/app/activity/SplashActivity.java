@@ -19,7 +19,7 @@ import es.mihx.app.R;
 
 @SuppressLint("HandlerLeak")
 public class SplashActivity extends Activity {
-		
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,32 +28,39 @@ public class SplashActivity extends Activity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.activity_splash);
-		
-		Handler handler = new Handler(){
+
+		Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
-				
-				if(msg.what == Constants.OK){
+
+				if (msg.what == Constants.OK) {
 					openMainActivity();
 				}
 			}
 		};
-		
+
 		Messenger messenger = new Messenger(handler);
-		
-		//Recuperar token para autologin
+
+		// Recuperar token para autologin
 		String token = Utils.getToken();
 		Log.i("SplashActivity", "TOKEN: " + token);
-		
-		Intent intent = new Intent(this,WebService.class);
-		intent.putExtra(WebService.PARAM_OPERATION, WebService.OPERATION_INIT);
-		intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
-		intent.putExtra(WebService.PARAM_TOKEN, token);
-		this.startService(intent);
+
+		if (Utils.isConnected(this)) {
+
+			Intent intent = new Intent(this, WebService.class);
+			intent.putExtra(WebService.PARAM_OPERATION,
+					WebService.OPERATION_INIT);
+			intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
+			intent.putExtra(WebService.PARAM_TOKEN, token);
+			this.startService(intent);
+		} else {
+			// TODO cargar las categorias previamente guardadas y llevar a la
+			// pag principal
+		}
 	}
-	
-	private void openMainActivity(){
+
+	private void openMainActivity() {
 		Intent i;
 		i = new Intent(SplashActivity.this, MainActivity.class);
 		i.putExtra(Constants.FROM_SPLASH, true);

@@ -224,7 +224,7 @@ public class FormActivity extends BaseActivity {
 		}
 
 		if (toggle_premium.isChecked())
-			credits = credits * 2;
+			credits = credits * 3;
 
 		total_credits.setText(String.valueOf(credits));
 	}
@@ -331,8 +331,8 @@ public class FormActivity extends BaseActivity {
 	private void showImageDialog() {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(FormActivity.this);
-		builder.setTitle("Choose image source");
-		builder.setItems(new CharSequence[] { "Gallery", "Camera" },
+		builder.setTitle(R.string.choose_image_source);
+		builder.setItems(new CharSequence[] { getString(R.string.gallery), getString(R.string.camera) },
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -344,7 +344,7 @@ public class FormActivity extends BaseActivity {
 							intent.setAction(Intent.ACTION_PICK);
 
 							startActivityForResult(Intent.createChooser(intent,
-									"Select Picture"), REQUEST_PHOTO);
+									getString(R.string.select_picture)), REQUEST_PHOTO);
 
 							break;
 						case 1: // This case picks an image from the camera

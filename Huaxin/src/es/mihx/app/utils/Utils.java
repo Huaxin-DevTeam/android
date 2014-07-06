@@ -16,6 +16,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 import es.mihx.app.R;
@@ -139,20 +141,20 @@ public class Utils {
 				Constants.PREFS_NAME, Context.MODE_PRIVATE);
 		return prefs.getString(Constants.PREFS_TOKEN_KEY, null);
 	}
-	
+
 	public static String getStringFromInputStream(InputStream is) {
-		 
+
 		BufferedReader br = null;
 		StringBuilder sb = new StringBuilder();
- 
+
 		String line;
 		try {
- 
+
 			br = new BufferedReader(new InputStreamReader(is));
 			while ((line = br.readLine()) != null) {
 				sb.append(line);
 			}
- 
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -164,9 +166,19 @@ public class Utils {
 				}
 			}
 		}
- 
+
 		return sb.toString();
- 
+
+	}
+
+	public static boolean isConnected(Activity context) {
+		ConnectivityManager cm = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 
 }
