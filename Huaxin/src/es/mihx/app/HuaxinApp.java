@@ -1,5 +1,6 @@
 package es.mihx.app;
 
+import android.app.Activity;
 import android.app.Application;
 import es.mihx.app.list.CategoryList;
 import es.mihx.app.list.CreditsList;
@@ -15,6 +16,8 @@ public class HuaxinApp extends Application {
 	public ItemList items;
 	public User user;
 	public CreditsList creds;
+	
+	private Activity activity;
 
 	@Override
 	public void onCreate() {
@@ -60,5 +63,13 @@ public class HuaxinApp extends Application {
 
 	public CreditsList getCreditOptions() {
 		return this.creds;
+	}
+
+	public Activity getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
 }

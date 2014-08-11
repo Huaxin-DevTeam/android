@@ -180,5 +180,19 @@ public class Utils {
 		}
 		return false;
 	}
+	
+	public static void saveOffline(String json){
+		SharedPreferences prefs = Constants.getApp().getSharedPreferences(
+				Constants.PREFS_NAME, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(Constants.PREFS_JSON_KEY, json);
+		editor.commit();
+	}
+	
+	public static String getOffline(){
+		SharedPreferences prefs = Constants.getApp().getSharedPreferences(
+				Constants.PREFS_NAME, Context.MODE_PRIVATE);
+		return prefs.getString(Constants.PREFS_JSON_KEY, null);
+	}
 
 }

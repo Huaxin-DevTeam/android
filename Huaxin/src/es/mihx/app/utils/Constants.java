@@ -11,6 +11,7 @@ public class Constants {
 	public static final String PREFS_NAME = "HUAXIN_PREFS";
 	public static final String PREFS_FAV_KEY = "HUAXIN_FAVORITES";
 	public static final String PREFS_TOKEN_KEY = "HUAXIN_USER_TOKEN";
+	public static final String PREFS_JSON_KEY = "HUAXIN_JSON";
 
 	public static final String PARAM_ID = "PARAM_ID";
 

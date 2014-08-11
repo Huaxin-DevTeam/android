@@ -40,9 +40,12 @@ public class BaseActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Constants.getApp().setActivity(this);
 
 		BugSenseHandler.initAndStartSession(BaseActivity.this, "c85f9471");
-		Crittercism.initialize(getApplicationContext(), "539f28dab573f121a7000002");
+		Crittercism.initialize(getApplicationContext(),
+				"539f28dab573f121a7000002");
 
 		setContentView(R.layout.activity_blank);
 	}
@@ -54,7 +57,8 @@ public class BaseActivity extends ActionBarActivity {
 
 		if (Constants.getApp().getUser() != null) {
 			setMenuForUser();
-			BugSenseHandler.addCrashExtraData("user", Constants.getApp().getUser().getPhone());
+			BugSenseHandler.addCrashExtraData("user", Constants.getApp()
+					.getUser().getPhone());
 		} else {
 			setMenuForAnonymous();
 		}
@@ -66,10 +70,20 @@ public class BaseActivity extends ActionBarActivity {
 				// Validation clicking on side navigation item
 				switch (itemId) {
 				case R.id.sidemenu_favorites:
-					loadFavorites();
+					if (!Utils.isConnected(BaseActivity.this)) {
+						Utils.makeInfo(BaseActivity.this,
+								getString(R.string.no_internet));
+					} else {
+						loadFavorites();
+					}
 					break;
 				case R.id.sidemenu_myads:
-					loadMyads();
+					if (!Utils.isConnected(BaseActivity.this)) {
+						Utils.makeInfo(BaseActivity.this,
+								getString(R.string.no_internet));
+					} else {
+						loadMyads();
+					}
 					break;
 				case R.id.sidemenu_search:
 					Log.i("BaseActivity", "Click New Search...");
@@ -78,29 +92,52 @@ public class BaseActivity extends ActionBarActivity {
 					// finish();
 					break;
 				case R.id.sidemenu_new_ad:
-					if (Constants.getApp().getUser() != null) {
-						startActivity(new Intent(getApplicationContext(),
-								FormActivity.class));
+					if (!Utils.isConnected(BaseActivity.this)) {
+						Utils.makeInfo(BaseActivity.this,
+								getString(R.string.no_internet));
 					} else {
-						sideNavigationView.hideMenu();
-						Utils.makeInfo(BaseActivity.this, getResources()
-								.getString(R.string.need_login));
-					}
+						if (Constants.getApp().getUser() != null) {
+							startActivity(new Intent(getApplicationContext(),
+									FormActivity.class));
+						} else {
+							sideNavigationView.hideMenu();
+							Utils.makeInfo(BaseActivity.this, getResources()
+									.getString(R.string.need_login));
+						}
 
+					}
 					break;
 				case R.id.sidemenu_login:
-					startActivityForResult(new Intent(getApplicationContext(),
-							LoginActivity.class), REQ_LOGIN);
+					if (!Utils.isConnected(BaseActivity.this)) {
+						Utils.makeInfo(BaseActivity.this,
+								getString(R.string.no_internet));
+					} else {
+						startActivityForResult(new Intent(
+								getApplicationContext(), LoginActivity.class),
+								REQ_LOGIN);
+					}
 					break;
 
 				case R.id.sidemenu_register:
-					startActivityForResult(new Intent(getApplicationContext(),
-							RegisterActivity.class), REQ_REG);
+					if (!Utils.isConnected(BaseActivity.this)) {
+						Utils.makeInfo(BaseActivity.this,
+								getString(R.string.no_internet));
+					} else {
+						startActivityForResult(
+								new Intent(getApplicationContext(),
+										RegisterActivity.class), REQ_REG);
+					}
 					break;
 
 				case R.id.sidemenu_buy:
-					startActivityForResult(new Intent(getApplicationContext(),
-							PurchaseActivity.class), REQ_PURCHASE);
+					if (!Utils.isConnected(BaseActivity.this)) {
+						Utils.makeInfo(BaseActivity.this,
+								getString(R.string.no_internet));
+					} else {
+						startActivityForResult(
+								new Intent(getApplicationContext(),
+										PurchaseActivity.class), REQ_PURCHASE);
+					}
 					break;
 
 				case R.id.sidemenu_logout:

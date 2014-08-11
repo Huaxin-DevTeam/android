@@ -14,11 +14,12 @@ import es.mihx.app.adapter.ModeAdapter;
 import es.mihx.app.fragment.ListFragment;
 import es.mihx.app.fragment.PhotoFragment;
 import es.mihx.app.utils.Constants;
+import es.mihx.app.utils.Utils;
 import es.mihx.app.R;
 
-
 @SuppressLint("HandlerLeak")
-public class ListActivity extends BaseActivity implements ModeAdapter.DetailListener {
+public class ListActivity extends BaseActivity implements
+		ModeAdapter.DetailListener {
 
 	private Fragment fragment;
 
@@ -30,8 +31,14 @@ public class ListActivity extends BaseActivity implements ModeAdapter.DetailList
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_list);
-		setTitle(Constants.getApp().getItems().size() + " "
-				+ getString(R.string.anuncios));
+		if (Constants.getApp() != null && Constants.getApp().getItems() != null)
+			setTitle(Constants.getApp().getItems().size() + " "
+					+ getString(R.string.anuncios));
+		else {
+			Intent i = new Intent(this, MainActivity.class);
+			startActivity(i);
+			finish();
+		}
 
 		initScreen();
 
@@ -49,16 +56,26 @@ public class ListActivity extends BaseActivity implements ModeAdapter.DetailList
 		btn_list.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!(fragment instanceof ListFragment))
-					switchFragment(new ListFragment());
+				if (!Utils.isConnected(ListActivity.this)) {
+					Utils.makeInfo(ListActivity.this,
+							getString(R.string.no_internet));
+				} else {
+					if (!(fragment instanceof ListFragment))
+						switchFragment(new ListFragment());
+				}
 			}
 		});
 
 		btn_photo.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!(fragment instanceof PhotoFragment))
-					switchFragment(new PhotoFragment());
+				if (!Utils.isConnected(ListActivity.this)) {
+					Utils.makeInfo(ListActivity.this,
+							getString(R.string.no_internet));
+				} else {
+					if (!(fragment instanceof PhotoFragment))
+						switchFragment(new PhotoFragment());
+				}
 			}
 		});
 
@@ -106,7 +123,7 @@ public class ListActivity extends BaseActivity implements ModeAdapter.DetailList
 
 	@Override
 	public void enterDetail(long id) {
-		Intent intent = new Intent(this,DetailActivity.class);
+		Intent intent = new Intent(this, DetailActivity.class);
 		intent.putExtra(Constants.PARAM_ID, id);
 		startActivity(intent);
 	}

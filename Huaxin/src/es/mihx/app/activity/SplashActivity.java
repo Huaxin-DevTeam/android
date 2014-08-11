@@ -57,6 +57,7 @@ public class SplashActivity extends Activity {
 		} else {
 			// TODO cargar las categorias previamente guardadas y llevar a la
 			// pag principal
+			openMainActivity();
 		}
 	}
 

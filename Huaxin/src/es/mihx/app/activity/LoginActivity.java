@@ -56,53 +56,60 @@ public class LoginActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-			// Validation
-			String user = username.getText().toString().trim();
-			String pass = password.getText().toString().trim();
 
-			if (user.compareTo("") == 0) {
-				Utils.toast(getString(R.string.username_notblank));
-				return;
-			}
+			if (!Utils.isConnected(LoginActivity.this)) {
+				Utils.makeInfo(LoginActivity.this,
+						getString(R.string.no_internet));
+			} else {
 
-			if (pass.compareTo("") == 0) {
-				Utils.toast(getString(R.string.password_notblank));
-				return;
-			}
+				// Validation
+				String user = username.getText().toString().trim();
+				String pass = password.getText().toString().trim();
 
-			// Call to ws...
-			Handler handler = new Handler() {
-				@Override
-				public void handleMessage(Message msg) {
-					super.handleMessage(msg);
-					if (msg.what == Constants.OK) {
-						showLoading(false);
-						Intent intent = new Intent();
-						intent.putExtra("message", (String) msg.obj);
-						setResult(Activity.RESULT_OK, intent);
-						finish();
-					} else {
-						String txt = (String) msg.obj;
-						if (txt != null) {
-							Utils.makeError(LoginActivity.this, txt);
-						}
-						showLoading(false);
-					}
+				if (user.compareTo("") == 0) {
+					Utils.toast(getString(R.string.username_notblank));
+					return;
 				}
-			};
 
-			Messenger messenger = new Messenger(handler);
+				if (pass.compareTo("") == 0) {
+					Utils.toast(getString(R.string.password_notblank));
+					return;
+				}
 
-			Intent intent = new Intent(LoginActivity.this, WebService.class);
-			intent.putExtra(WebService.PARAM_OPERATION,
-					WebService.OPERATION_LOGIN);
-			intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
-			intent.putExtra(WebService.PARAM_USERNAME, user);
-			intent.putExtra(WebService.PARAM_PASSWORD, pass);
+				// Call to ws...
+				Handler handler = new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						super.handleMessage(msg);
+						if (msg.what == Constants.OK) {
+							showLoading(false);
+							Intent intent = new Intent();
+							intent.putExtra("message", (String) msg.obj);
+							setResult(Activity.RESULT_OK, intent);
+							finish();
+						} else {
+							String txt = (String) msg.obj;
+							if (txt != null) {
+								Utils.makeError(LoginActivity.this, txt);
+							}
+							showLoading(false);
+						}
+					}
+				};
 
-			startService(intent);
+				Messenger messenger = new Messenger(handler);
 
-			showLoading(true);
+				Intent intent = new Intent(LoginActivity.this, WebService.class);
+				intent.putExtra(WebService.PARAM_OPERATION,
+						WebService.OPERATION_LOGIN);
+				intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
+				intent.putExtra(WebService.PARAM_USERNAME, user);
+				intent.putExtra(WebService.PARAM_PASSWORD, pass);
+
+				startService(intent);
+
+				showLoading(true);
+			}
 		}
 	};
 }

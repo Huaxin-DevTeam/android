@@ -49,8 +49,9 @@ public class MainActivity extends BaseActivity {
 				false);
 		boolean from_logout = intent.getBooleanExtra(Constants.FROM_LOGOUT,
 				false);
-
-		if (from_splash && Constants.getApp().getUser() != null) {
+		if (!Utils.isConnected(this)) {
+			Utils.makeInfo(this, getString(R.string.no_internet));
+		} else if (from_splash && Constants.getApp().getUser() != null) {
 			Utils.makeText(this, getString(R.string.welcome_back) + " "
 					+ Constants.getApp().getUser().getEmail());
 		} else if (from_logout) {
@@ -68,24 +69,29 @@ public class MainActivity extends BaseActivity {
 
 	private void prepareControls() {
 		// Ponemos categorias
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_dropdown_item, Constants
-						.getApp().getCategories().getNames());
-		spin_categories.setAdapter(adapter);
+		if (Constants.getApp().getCategories() != null) {
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_dropdown_item, Constants
+							.getApp().getCategories().getNames());
+			spin_categories.setAdapter(adapter);
+		}
 
 		// Ponemos la publi
-		String url = Uri.encode(Constants.BASEURL + Constants.getApp().getAd().getSrc(),":./_");
-		UrlImageViewHelper.setUrlDrawable(img_publi,url);
-		Log.w("setting publi...",url);
-		img_publi.setOnClickListener(new OnClickListener() {
+		if (Constants.getApp().getAd() != null) {
+			String url = Uri.encode(Constants.BASEURL
+					+ Constants.getApp().getAd().getSrc(), ":./_");
+			UrlImageViewHelper.setUrlDrawable(img_publi, url);
+			Log.w("setting publi...", url);
+			img_publi.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri
-						.parse(Constants.getApp().getAd().getLink()));
-				startActivity(intent);
-			}
-		});
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+							.parse(Constants.getApp().getAd().getLink()));
+					startActivity(intent);
+				}
+			});
+		}
 
 		// Botón buscar
 		btn_search.setOnClickListener(searchClick);
@@ -96,7 +102,12 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// Abrir form para anuncios
-				openFormActivity();
+				if (!Utils.isConnected(MainActivity.this)) {
+					Utils.makeInfo(MainActivity.this,
+							getString(R.string.no_internet));
+				} else {
+					openFormActivity();
+				}
 			}
 		});
 	}
@@ -105,48 +116,57 @@ public class MainActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-			String query = txt_search.getText().toString().trim();
 
-			// Checks...
-//			if (query.equalsIgnoreCase("")) {
-//				Utils.makeInfo(MainActivity.this,
-//						getResources().getString(R.string.query_null));
-//				return;
-//			}
-//
-//			if (query.length() < 2) {
-//				Utils.makeInfo(MainActivity.this,
-//						getResources().getString(R.string.query_short));
-//				return;
-//			}
+			if (!Utils.isConnected(MainActivity.this)
+					|| Constants.getApp() == null
+					|| Constants.getApp().getCategories() == null) {
+				Utils.makeInfo(MainActivity.this,
+						getString(R.string.no_internet));
+			} else {
 
-			// Category selected
-			int category_id = Constants.getApp().getCategories()
-					.get(spin_categories.getSelectedItemPosition()).getId();
+				String query = txt_search.getText().toString().trim();
 
-			// Todo ok, pedimos resultados y mostramos loader
-			Handler handler = new Handler() {
-				@Override
-				public void handleMessage(Message msg) {
-					super.handleMessage(msg);
+				// Checks...
+				// if (query.equalsIgnoreCase("")) {
+				// Utils.makeInfo(MainActivity.this,
+				// getResources().getString(R.string.query_null));
+				// return;
+				// }
+				//
+				// if (query.length() < 2) {
+				// Utils.makeInfo(MainActivity.this,
+				// getResources().getString(R.string.query_short));
+				// return;
+				// }
 
-					if (msg.what == Constants.OK) {
-						openListActivity();
+				// Category selected
+				int category_id = Constants.getApp().getCategories()
+						.get(spin_categories.getSelectedItemPosition()).getId();
+
+				// Todo ok, pedimos resultados y mostramos loader
+				Handler handler = new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						super.handleMessage(msg);
+
+						if (msg.what == Constants.OK) {
+							openListActivity();
+						}
 					}
-				}
-			};
+				};
 
-			Messenger messenger = new Messenger(handler);
+				Messenger messenger = new Messenger(handler);
 
-			Intent intent = new Intent(MainActivity.this, WebService.class);
-			intent.putExtra(WebService.PARAM_OPERATION,
-					WebService.OPERATION_SEARCH);
-			intent.putExtra(WebService.PARAM_QUERY, query);
-			intent.putExtra(WebService.PARAM_CATEGORY_ID, category_id);
-			intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
-			startService(intent);
+				Intent intent = new Intent(MainActivity.this, WebService.class);
+				intent.putExtra(WebService.PARAM_OPERATION,
+						WebService.OPERATION_SEARCH);
+				intent.putExtra(WebService.PARAM_QUERY, query);
+				intent.putExtra(WebService.PARAM_CATEGORY_ID, category_id);
+				intent.putExtra(WebService.PARAM_MESSENGER_SERVICE, messenger);
+				startService(intent);
 
-			showLoading(true);
+				showLoading(true);
+			}
 		}
 	};
 

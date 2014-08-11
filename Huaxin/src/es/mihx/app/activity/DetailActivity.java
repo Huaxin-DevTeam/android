@@ -33,7 +33,8 @@ public class DetailActivity extends BaseActivity {
 	private Item item;
 
 	private ImageView img;
-	private TextView txt_category, txt_description, txt_price, txt_location, txt_phone;
+	private TextView txt_category, txt_description, txt_price, txt_location,
+			txt_phone;
 	private Button btn_call, btn_fav, btn_share;
 
 	@Override
@@ -44,15 +45,25 @@ public class DetailActivity extends BaseActivity {
 
 		// Get params
 		Bundle b = getIntent().getExtras();
-		id = b.getLong(Constants.PARAM_ID);
+		if (b != null) {
+			id = b.getLong(Constants.PARAM_ID);
 
-		item = Constants.getApp().getItems().getItem(id);
+			item = Constants.getApp().getItems().getItem(id);
 
-		setTitle(item.getTitle());
+			setTitle(item.getTitle());
+		} else {
+			Intent i = new Intent(this, MainActivity.class);
+			startActivity(i);
+			finish();
+		}
 
 		initScreen();
 
 		prepareControls();
+
+		if (!Utils.isConnected(this)) {
+			Utils.makeInfo(this, getString(R.string.no_internet));
+		}
 	}
 
 	private void initScreen() {
@@ -124,10 +135,18 @@ public class DetailActivity extends BaseActivity {
 
 		switch (item.getItemId()) {
 		case R.id.action_edit:
-			editItem();
+			if (!Utils.isConnected(this)) {
+				Utils.makeInfo(this, getString(R.string.no_internet));
+			} else {
+				editItem();
+			}
 			return true;
 		case R.id.action_delete:
-			deleteItem();
+			if (!Utils.isConnected(this)) {
+				Utils.makeInfo(this, getString(R.string.no_internet));
+			} else {
+				deleteItem();
+			}
 			return true;
 		default:
 			break;
@@ -166,10 +185,10 @@ public class DetailActivity extends BaseActivity {
 								if (msg.what == Constants.OK) {
 									Utils.makeText(DetailActivity.this,
 											(String) msg.obj);
-									
-									if(Utils.isFavorite(item.getId()))
+
+									if (Utils.isFavorite(item.getId()))
 										Utils.switchFavorite(item.getId());
-									
+
 									// vuelta al origen
 									loadMyads();
 								} else if (msg.obj != null) {
@@ -189,7 +208,7 @@ public class DetailActivity extends BaseActivity {
 						intent.putExtra(WebService.PARAM_MESSENGER_SERVICE,
 								messenger);
 						startService(intent);
-						
+
 						showLoading(true);
 
 					}

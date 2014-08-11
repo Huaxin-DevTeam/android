@@ -78,7 +78,7 @@ public class FormActivity extends BaseActivity {
 			long id = b.getLong(Constants.PARAM_ID);
 
 			item = Constants.getApp().getItems().getItem(id);
-		}
+		} 
 
 		initScreen();
 
@@ -202,7 +202,7 @@ public class FormActivity extends BaseActivity {
 	}
 
 	private void calculateTotalCredits() {
-		
+
 		switch (seek_duration.getProgress()) {
 		case 0:
 			credits = 3;
@@ -233,98 +233,109 @@ public class FormActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-			// Category selected
-			int category_id = Constants.getApp().getCategories()
-					.get(spin_categories.getSelectedItemPosition()).getId();
 
-			String title = txt_title.getText().toString();
-			String descr = txt_description.getText().toString();
-			String phone = txt_phone.getText().toString();
-			String pricetxt = txt_price.getText().toString();
-			String location = txt_location.getText().toString();
-			boolean premium = toggle_premium.isChecked();
-
-			if (title != null && title.trim().compareToIgnoreCase("") != 0
-					&& descr != null
-					&& descr.trim().compareToIgnoreCase("") != 0
-					&& phone != null
-					&& phone.trim().compareToIgnoreCase("") != 0
-					&& location != null
-					&& location.trim().compareToIgnoreCase("") != 0
-					&& pricetxt != null
-					&& pricetxt.trim().compareToIgnoreCase("") != 0) {
-
-				float price = Float.parseFloat(pricetxt);
-
-				// Todo ok, pedimos resultados y mostramos loader
-				Handler handler = new Handler() {
-					@Override
-					public void handleMessage(Message msg) {
-						super.handleMessage(msg);
-						
-						showLoading(false);
-						if (msg.what == Constants.OK) {
-							Utils.makeText(FormActivity.this, (String) msg.obj);
-							loadMyads();
-							if(item==null) updateCredits(credits, false);
-						} else if (msg.obj != null) {
-							Utils.makeError(FormActivity.this, (String) msg.obj);
-						}
-					}
-				};
-
-				if (item == null) {
-
-					Log.i(TAG, "Llamando al service...");
-
-					Messenger messenger = new Messenger(handler);
-
-					Intent intent = new Intent(FormActivity.this,
-							WebService.class);
-					intent.putExtra(WebService.PARAM_OPERATION,
-							WebService.OPERATION_NEW_AD);
-					intent.putExtra(WebService.PARAM_CATEGORY_ID, category_id);
-					intent.putExtra(WebService.PARAM_TITLE, title);
-					intent.putExtra(WebService.PARAM_DESCRIPTION, descr);
-					intent.putExtra(WebService.PARAM_PHONE, phone);
-					intent.putExtra(WebService.PARAM_PRICE, price);
-					intent.putExtra(WebService.PARAM_LOCATION, location);
-					intent.putExtra(WebService.PARAM_PREMIUM, premium);
-					intent.putExtra(WebService.PARAM_DURATION, duration);
-					intent.putExtra(WebService.PARAM_IMAGE, base64img);
-					intent.putExtra(WebService.PARAM_MESSENGER_SERVICE,
-							messenger);
-					startService(intent);
-				} else {
-					// Edit mode
-
-					Messenger messenger = new Messenger(handler);
-
-					Intent intent = new Intent(FormActivity.this,
-							WebService.class);
-					intent.putExtra(WebService.PARAM_OPERATION,
-							WebService.OPERATION_EDIT);
-					intent.putExtra(WebService.PARAM_ITEM_ID, item.getId());
-					intent.putExtra(WebService.PARAM_CATEGORY_ID, category_id);
-					intent.putExtra(WebService.PARAM_TITLE, title);
-					intent.putExtra(WebService.PARAM_DESCRIPTION, descr);
-					intent.putExtra(WebService.PARAM_PHONE, phone);
-					intent.putExtra(WebService.PARAM_PRICE, price);
-					intent.putExtra(WebService.PARAM_LOCATION, location);
-					intent.putExtra(WebService.PARAM_IMAGE, base64img);
-					intent.putExtra(WebService.PARAM_MESSENGER_SERVICE,
-							messenger);
-					startService(intent);
-
-				}
-
-				showLoading(true);
-
+			if (!Utils.isConnected(FormActivity.this)) {
+				Utils.makeInfo(FormActivity.this,
+						getString(R.string.no_internet));
 			} else {
-				Utils.makeError(FormActivity.this,
-						getResources().getString(R.string.fill_all_fields));
-			}
 
+				// Category selected
+				int category_id = Constants.getApp().getCategories()
+						.get(spin_categories.getSelectedItemPosition()).getId();
+
+				String title = txt_title.getText().toString();
+				String descr = txt_description.getText().toString();
+				String phone = txt_phone.getText().toString();
+				String pricetxt = txt_price.getText().toString();
+				String location = txt_location.getText().toString();
+				boolean premium = toggle_premium.isChecked();
+
+				if (title != null && title.trim().compareToIgnoreCase("") != 0
+						&& descr != null
+						&& descr.trim().compareToIgnoreCase("") != 0
+						&& phone != null
+						&& phone.trim().compareToIgnoreCase("") != 0
+						&& location != null
+						&& location.trim().compareToIgnoreCase("") != 0
+						&& pricetxt != null
+						&& pricetxt.trim().compareToIgnoreCase("") != 0) {
+
+					float price = Float.parseFloat(pricetxt);
+
+					// Todo ok, pedimos resultados y mostramos loader
+					Handler handler = new Handler() {
+						@Override
+						public void handleMessage(Message msg) {
+							super.handleMessage(msg);
+
+							showLoading(false);
+							if (msg.what == Constants.OK) {
+								Utils.makeText(FormActivity.this,
+										(String) msg.obj);
+								loadMyads();
+								if (item == null)
+									updateCredits(credits, false);
+							} else if (msg.obj != null) {
+								Utils.makeError(FormActivity.this,
+										(String) msg.obj);
+							}
+						}
+					};
+
+					if (item == null) {
+
+						Log.i(TAG, "Llamando al service...");
+
+						Messenger messenger = new Messenger(handler);
+
+						Intent intent = new Intent(FormActivity.this,
+								WebService.class);
+						intent.putExtra(WebService.PARAM_OPERATION,
+								WebService.OPERATION_NEW_AD);
+						intent.putExtra(WebService.PARAM_CATEGORY_ID,
+								category_id);
+						intent.putExtra(WebService.PARAM_TITLE, title);
+						intent.putExtra(WebService.PARAM_DESCRIPTION, descr);
+						intent.putExtra(WebService.PARAM_PHONE, phone);
+						intent.putExtra(WebService.PARAM_PRICE, price);
+						intent.putExtra(WebService.PARAM_LOCATION, location);
+						intent.putExtra(WebService.PARAM_PREMIUM, premium);
+						intent.putExtra(WebService.PARAM_DURATION, duration);
+						intent.putExtra(WebService.PARAM_IMAGE, base64img);
+						intent.putExtra(WebService.PARAM_MESSENGER_SERVICE,
+								messenger);
+						startService(intent);
+					} else {
+						// Edit mode
+
+						Messenger messenger = new Messenger(handler);
+
+						Intent intent = new Intent(FormActivity.this,
+								WebService.class);
+						intent.putExtra(WebService.PARAM_OPERATION,
+								WebService.OPERATION_EDIT);
+						intent.putExtra(WebService.PARAM_ITEM_ID, item.getId());
+						intent.putExtra(WebService.PARAM_CATEGORY_ID,
+								category_id);
+						intent.putExtra(WebService.PARAM_TITLE, title);
+						intent.putExtra(WebService.PARAM_DESCRIPTION, descr);
+						intent.putExtra(WebService.PARAM_PHONE, phone);
+						intent.putExtra(WebService.PARAM_PRICE, price);
+						intent.putExtra(WebService.PARAM_LOCATION, location);
+						intent.putExtra(WebService.PARAM_IMAGE, base64img);
+						intent.putExtra(WebService.PARAM_MESSENGER_SERVICE,
+								messenger);
+						startService(intent);
+
+					}
+
+					showLoading(true);
+
+				} else {
+					Utils.makeError(FormActivity.this, getResources()
+							.getString(R.string.fill_all_fields));
+				}
+			}
 		}
 	};
 
@@ -332,7 +343,8 @@ public class FormActivity extends BaseActivity {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(FormActivity.this);
 		builder.setTitle(R.string.choose_image_source);
-		builder.setItems(new CharSequence[] { getString(R.string.gallery), getString(R.string.camera) },
+		builder.setItems(new CharSequence[] { getString(R.string.gallery),
+				getString(R.string.camera) },
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -344,7 +356,8 @@ public class FormActivity extends BaseActivity {
 							intent.setAction(Intent.ACTION_PICK);
 
 							startActivityForResult(Intent.createChooser(intent,
-									getString(R.string.select_picture)), REQUEST_PHOTO);
+									getString(R.string.select_picture)),
+									REQUEST_PHOTO);
 
 							break;
 						case 1: // This case picks an image from the camera
