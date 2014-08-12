@@ -26,17 +26,19 @@ public class NetworkListener extends BroadcastReceiver {
 		}
 
 		if (isConnected
-				&& (Constants.getApp() == null || Constants.getApp().getCategories() == null) 
-				&& norepeat) {
+				&& (Constants.getApp() == null || Constants.getApp()
+						.getCategories() == null) && norepeat) {
 
 			norepeat = false;
 
 			HuaxinApp app = (HuaxinApp) context.getApplicationContext();
-			Intent i = new Intent(context, SplashActivity.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			context.startActivity(i);
-			app.getActivity().finish();
+			if (app.getActivity() != null) {
+				Intent i = new Intent(context, SplashActivity.class);
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				context.startActivity(i);
+				app.getActivity().finish();
+			}
 		}
 	}
 
